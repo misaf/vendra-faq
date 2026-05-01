@@ -70,7 +70,8 @@ final class FaqForm
                     ->columnSpanFull()
                     ->image()
                     ->label(__('vendra-faq::attributes.image'))
-                    ->panelLayout('grid'),
+                    ->panelLayout('grid')
+                    ->responsiveImages(),
 
                 Toggle::make('status')
                     ->afterStateUpdated(fn(Livewire $livewire) => $livewire->validateOnly("data.status"))
