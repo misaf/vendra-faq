@@ -21,7 +21,6 @@ final class FaqServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 'create_faqs_table'
             ])
-            ->runsMigrations()
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command->askToStarRepoOnGitHub('misaf/vendra-faq');
             });
