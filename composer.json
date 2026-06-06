@@ -35,7 +35,7 @@
         "misaf/vendra-tenant": "dev-master",
         "misaf/vendra-user": "dev-master",
         "mokhosh/filament-jalali": "5.0",
-        "php": "^8.2",
+        "php": "^8.3",
         "spatie/eloquent-sortable": "^5.0",
         "spatie/laravel-package-tools": "^1.0",
         "spatie/laravel-sluggable": "^4.0"
