@@ -9,9 +9,11 @@ use Filament\Panel;
 
 final class FaqPlugin implements Plugin
 {
+    public const string ID = 'vendra-faq';
+
     public function getId(): string
     {
-        return 'vendra-faq';
+        return self::ID;
     }
 
     public static function make(): static
