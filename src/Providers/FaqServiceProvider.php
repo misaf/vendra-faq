@@ -6,6 +6,7 @@ namespace Misaf\VendraFaq\Providers;
 
 use Filament\Panel;
 use Illuminate\Foundation\Console\AboutCommand;
+use Misaf\VendraFaq\Console\Commands\SeedCommand;
 use Misaf\VendraFaq\FaqPlugin;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
@@ -21,6 +22,7 @@ final class FaqServiceProvider extends PackageServiceProvider
             ->hasMigrations([
                 'create_faqs_table'
             ])
+            ->hasCommands(SeedCommand::class)
             ->hasInstallCommand(function (InstallCommand $command): void {
                 $command->askToStarRepoOnGitHub('misaf/vendra-faq');
             });
