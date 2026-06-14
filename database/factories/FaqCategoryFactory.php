@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Misaf\VendraFaq\Database\Factories;
 
+use Illuminate\Database\Eloquent\Factories\Attributes\UseModel;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Str;
 use Misaf\VendraFaq\Models\FaqCategory;
@@ -12,10 +13,9 @@ use Misaf\VendraTenant\Models\Tenant;
 /**
  * @extends Factory<FaqCategory>
  */
+#[UseModel(FaqCategory::class)]
 final class FaqCategoryFactory extends Factory
 {
-    protected $model = FaqCategory::class;
-
     public function definition(): array
     {
         return [
