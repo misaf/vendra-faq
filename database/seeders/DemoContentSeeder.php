@@ -8,11 +8,33 @@ use Illuminate\Support\Facades\Validator;
 use Misaf\VendraFaq\Database\Factories\FaqCategoryFactory;
 use Misaf\VendraFaq\Database\Factories\FaqFactory;
 use Misaf\VendraFaq\Models\FaqCategory;
-use Misaf\VendraSupport\Database\Seeders\TenantDemoContentSeeder;
+use Misaf\VendraSupport\Database\Seeders\DemoContentSeeder as BaseDemoContentSeeder;
+use Misaf\VendraTenant\Concerns\RequiresCurrentTenant;
 use Misaf\VendraTenant\Models\Tenant;
 
-final class DemoContentSeeder extends TenantDemoContentSeeder
+final class DemoContentSeeder extends BaseDemoContentSeeder
 {
+    use RequiresCurrentTenant;
+
+    protected function seedFactories(): void
+    {
+        $tenant = $this->currentTenant();
+
+        $this->seedFactoryRecords($tenant);
+    }
+
+    /**
+     * @param list<array<string, mixed>> $records
+     */
+    protected function seedFixtures(array $records): void
+    {
+        $tenant = $this->currentTenant();
+
+        foreach ($records as $record) {
+            $this->seedFixtureRecord($tenant, $record);
+        }
+    }
+
     protected function seedFactoryRecords(Tenant $tenant): void
     {
         FaqCategoryFactory::new()
@@ -20,8 +42,8 @@ final class DemoContentSeeder extends TenantDemoContentSeeder
             ->enabled()
             ->count(4)
             ->create()
-            ->each(fn(FaqCategory $category): mixed => FaqFactory::new()
-                ->forCategory($category)
+            ->each(fn(FaqCategory $faqCategory): mixed => FaqFactory::new()
+                ->forCategory($faqCategory)
                 ->enabled()
                 ->count(3)
                 ->create());
@@ -50,18 +72,18 @@ final class DemoContentSeeder extends TenantDemoContentSeeder
      */
     private function handleSeedFixtureRecord(Tenant $tenant, array $data): void
     {
-        $category = new FaqCategory([
+        $faqCategory = new FaqCategory([
             'name'        => $data['name'],
             'description' => $data['description'],
             'slug'        => $data['slug'],
             'status'      => $data['status'],
         ]);
 
-        $category->tenant_id = $tenant->id;
-        $category->save();
+        $faqCategory->tenant_id = $tenant->id;
+        $faqCategory->save();
 
         foreach ($data['faqs'] as $faqRecord) {
-            $this->handleFaqFixtureRecord($tenant, $category, $faqRecord);
+            $this->handleFaqFixtureRecord($tenant, $faqCategory, $faqRecord);
         }
     }
 
@@ -73,9 +95,9 @@ final class DemoContentSeeder extends TenantDemoContentSeeder
      *     status: bool
      * } $faqRecord
      */
-    private function handleFaqFixtureRecord(Tenant $tenant, FaqCategory $category, array $faqRecord): void
+    private function handleFaqFixtureRecord(Tenant $tenant, FaqCategory $faqCategory, array $faqRecord): void
     {
-        $faq = $category->faqs()->make([
+        $faq = $faqCategory->faqs()->make([
             'name'        => $faqRecord['name'],
             'description' => $faqRecord['description'],
             'slug'        => $faqRecord['slug'],
@@ -141,4 +163,5 @@ final class DemoContentSeeder extends TenantDemoContentSeeder
 
         return $validated;
     }
+
 }
