@@ -7,8 +7,8 @@ namespace Misaf\VendraFaq\Database\Seeders;
 use Misaf\VendraFaq\Enums\FaqCategoryPolicyEnum;
 use Misaf\VendraFaq\Enums\FaqPolicyEnum;
 use Misaf\VendraFaq\FaqPlugin;
+use Misaf\VendraSupport\Concerns\RequiresCurrentTenant;
 use Misaf\VendraSupport\Database\Seeders\PermissionPolicySeeder as BasePermissionPolicySeeder;
-use Misaf\VendraTenant\Concerns\RequiresCurrentTenant;
 
 final class PermissionPolicySeeder extends BasePermissionPolicySeeder
 {

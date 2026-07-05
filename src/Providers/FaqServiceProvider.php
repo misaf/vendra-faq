@@ -8,6 +8,7 @@ use Filament\Panel;
 use Illuminate\Foundation\Console\AboutCommand;
 use Misaf\VendraFaq\Console\Commands\SeedCommand;
 use Misaf\VendraFaq\FaqPlugin;
+use Misaf\VendraSupport\Support\TenantSeeders;
 use Spatie\LaravelPackageTools\Commands\InstallCommand;
 use Spatie\LaravelPackageTools\Package;
 use Spatie\LaravelPackageTools\PackageServiceProvider;
@@ -41,6 +42,8 @@ final class FaqServiceProvider extends PackageServiceProvider
 
     public function packageBooted(): void
     {
+        $this->app->make(TenantSeeders::class)->register('vendra-faq:seed', priority: 50);
+
         AboutCommand::add('Vendra Faq', fn() => ['Version' => 'dev-master']);
     }
 }

@@ -137,7 +137,7 @@ final class FaqTable
                 Group::make('faqCategory.name')
                     ->label(__('vendra-faq::navigation.faq_category'))
                     ->getTitleFromRecordUsing(function (Faq $record, Livewire $livewire) {
-                        return $record->faqCategory->getTranslation('name', $livewire->activeLocale);
+                        return $record->faqCategory?->getTranslation('name', $livewire->activeLocale);
                     })
             );
     }
