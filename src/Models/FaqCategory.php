@@ -14,12 +14,11 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Carbon;
-use Misaf\VendraActivityLog\Concerns\HasDefaultActivityLogOptions;
 use Misaf\VendraFaq\Database\Factories\FaqCategoryFactory;
 use Misaf\VendraFaq\Observers\FaqCategoryObserver;
 use Misaf\VendraMultimedia\Concerns\HasDefaultMediaConversions;
+use Misaf\VendraSupport\Contracts\ShouldLogActivity;
 use Misaf\VendraSupport\Traits\BelongsToTenant;
-use Spatie\Activitylog\Traits\LogsActivity;
 use Spatie\EloquentSortable\Sortable;
 use Spatie\EloquentSortable\SortableTrait;
 use Spatie\MediaLibrary\HasMedia;
@@ -44,10 +43,9 @@ use Spatie\Translatable\HasTranslations;
 #[Hidden(['tenant_id'])]
 #[ObservedBy([FaqCategoryObserver::class])]
 #[UseFactory(FaqCategoryFactory::class)]
-final class FaqCategory extends Model implements HasMedia, Sortable
+final class FaqCategory extends Model implements HasMedia, Sortable, ShouldLogActivity
 {
     use BelongsToTenant;
-    use HasDefaultActivityLogOptions;
 
     use HasDefaultMediaConversions, InteractsWithMedia {
         HasDefaultMediaConversions::registerMediaConversions insteadof InteractsWithMedia;
@@ -56,7 +54,6 @@ final class FaqCategory extends Model implements HasMedia, Sortable
     /** @use HasFactory<FaqCategoryFactory> */
     use HasFactory;
     use HasTranslations;
-    use LogsActivity;
     use SoftDeletes;
     use SortableTrait;
 
