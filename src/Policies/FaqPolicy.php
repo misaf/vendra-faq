@@ -5,71 +5,71 @@ declare(strict_types=1);
 namespace Misaf\VendraFaq\Policies;
 
 use Illuminate\Auth\Access\HandlesAuthorization;
+use Illuminate\Contracts\Auth\Access\Authorizable;
 use Misaf\VendraFaq\Enums\FaqPolicyEnum;
 use Misaf\VendraFaq\Models\Faq;
-use Misaf\VendraUser\Models\User;
 
 final class FaqPolicy
 {
     use HandlesAuthorization;
 
-    public function create(User $user): bool
+    public function create(Authorizable $user): bool
     {
-        return $user->can(FaqPolicyEnum::CREATE);
+        return $user->can(FaqPolicyEnum::CREATE->value);
     }
 
-    public function delete(User $user, Faq $faq): bool
+    public function delete(Authorizable $user, Faq $faq): bool
     {
-        return $user->can(FaqPolicyEnum::DELETE);
+        return $user->can(FaqPolicyEnum::DELETE->value);
     }
 
-    public function deleteAny(User $user): bool
+    public function deleteAny(Authorizable $user): bool
     {
-        return $user->can(FaqPolicyEnum::DELETE_ANY);
+        return $user->can(FaqPolicyEnum::DELETE_ANY->value);
     }
 
-    public function forceDelete(User $user, Faq $faq): bool
+    public function forceDelete(Authorizable $user, Faq $faq): bool
     {
-        return $user->can(FaqPolicyEnum::FORCE_DELETE);
+        return $user->can(FaqPolicyEnum::FORCE_DELETE->value);
     }
 
-    public function forceDeleteAny(User $user): bool
+    public function forceDeleteAny(Authorizable $user): bool
     {
-        return $user->can(FaqPolicyEnum::FORCE_DELETE_ANY);
+        return $user->can(FaqPolicyEnum::FORCE_DELETE_ANY->value);
     }
 
-    public function reorder(User $user): bool
+    public function reorder(Authorizable $user): bool
     {
-        return $user->can(FaqPolicyEnum::REORDER);
+        return $user->can(FaqPolicyEnum::REORDER->value);
     }
 
-    public function replicate(User $user, Faq $faq): bool
+    public function replicate(Authorizable $user, Faq $faq): bool
     {
-        return $user->can(FaqPolicyEnum::REPLICATE);
+        return $user->can(FaqPolicyEnum::REPLICATE->value);
     }
 
-    public function restore(User $user, Faq $faq): bool
+    public function restore(Authorizable $user, Faq $faq): bool
     {
-        return $user->can(FaqPolicyEnum::RESTORE);
+        return $user->can(FaqPolicyEnum::RESTORE->value);
     }
 
-    public function restoreAny(User $user): bool
+    public function restoreAny(Authorizable $user): bool
     {
-        return $user->can(FaqPolicyEnum::RESTORE_ANY);
+        return $user->can(FaqPolicyEnum::RESTORE_ANY->value);
     }
 
-    public function update(User $user, Faq $faq): bool
+    public function update(Authorizable $user, Faq $faq): bool
     {
-        return $user->can(FaqPolicyEnum::UPDATE);
+        return $user->can(FaqPolicyEnum::UPDATE->value);
     }
 
-    public function view(User $user, Faq $faq): bool
+    public function view(Authorizable $user, Faq $faq): bool
     {
-        return $user->can(FaqPolicyEnum::VIEW);
+        return $user->can(FaqPolicyEnum::VIEW->value);
     }
 
-    public function viewAny(User $user): bool
+    public function viewAny(Authorizable $user): bool
     {
-        return $user->can(FaqPolicyEnum::VIEW_ANY);
+        return $user->can(FaqPolicyEnum::VIEW_ANY->value);
     }
 }

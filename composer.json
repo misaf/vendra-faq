@@ -33,7 +33,6 @@
 		"misaf/vendra-activity-log": "dev-master",
 		"misaf/vendra-multimedia": "dev-master",
 		"misaf/vendra-support": "dev-master",
-		"misaf/vendra-user": "dev-master",
 		"misaf/filament-jalali": "^5.1",
 		"spatie/eloquent-sortable": "^5.0",
 		"spatie/laravel-package-tools": "^1.0",
@@ -59,8 +58,12 @@
 	"autoload": {
 		"psr-4": {
 			"Misaf\\VendraFaq\\": "src/",
+			"Misaf\\VendraFaq\\Database\\Seeders\\": "database/seeders/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
 			"Misaf\\VendraFaq\\Database\\Factories\\": "database/factories/",
-			"Misaf\\VendraFaq\\Database\\Seeders\\": "database/seeders/",
 			"Misaf\\VendraFaq\\Tests\\": "tests/"
 		}
 	},
