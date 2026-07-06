@@ -30,7 +30,7 @@
 		"illuminate/support": "^13.0",
 		"lara-zeus/spatie-translatable": "^2.0",
 		"laravel/pennant": "^1.19",
-		"misaf/vendra-multimedia": "dev-master",
+		"misaf/vendra-multimedia": "^1.0.0",
 		"misaf/vendra-support": "dev-master",
 		"misaf/filament-jalali": "^5.1",
 		"spatie/eloquent-sortable": "^5.0",
