@@ -1,6 +1,5 @@
 {
     "name": "misaf/vendra-faq",
-    "version": "0.0.7",
     "description": "Frequently Asked Questions management system with categorization",
     "keywords": [
         "laravel",
@@ -62,13 +61,13 @@
         }
     },
     "extra": {
+        "branch-alias": {
+            "dev-master": "0.0.x-dev"
+        },
         "laravel": {
             "providers": [
                 "Misaf\\VendraFaq\\Providers\\FaqServiceProvider"
             ]
-        },
-        "branch-alias": {
-            "dev-master": "13.x-dev"
         }
     },
     "scripts": {

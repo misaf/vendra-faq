@@ -4,7 +4,7 @@ The `misaf/vendra-faq` package owns frequently asked questions with categorizati
 
 ### Standards
 
-- Keep faq domain code inside `app-modules/vendra-faq` using the `Misaf\VendraFaq` namespace.
+- Keep faq domain code inside `packages/vendra-faq` using the `Misaf\VendraFaq` namespace.
 - Use this package for models, migrations, factories, seeders, policies, permission enums, observers, Filament resources, translations, config, and package bootstrapping.
 - Keep JSON:API serialization and API routes in `misaf/vendra-faq-api`.
 - Follow existing model conventions where they apply: tenant ownership, translated `name` / `description` / `slug`, soft deletes, sortable `position`, media collections, factories, and typed relationships.
