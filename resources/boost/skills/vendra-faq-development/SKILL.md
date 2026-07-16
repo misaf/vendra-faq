@@ -7,6 +7,12 @@ description: "Create, modify, review, or test the Vendra FAQ package in packages
 
 ## Workflow
 
+## Translatable Persistence
+
+- Making a persisted model field translatable is an explicit domain choice unless this package already requires it.
+- Every field listed in a model's `$translatable` array must definitely use a JSON database column. Keep its model traits/casts, factories, validation, Filament locale UI, API serialization, and tests translation-aware.
+- A field not listed in `$translatable` must use the appropriate scalar database type and must not use Spatie Translatable, translatable slug traits, locale switchers, translated callbacks, or translation-shaped array data.
+
 Always use this skill together with `laravel-best-practices` for Laravel PHP and `pest-testing` when tests are added or changed. Use `tailwindcss-development` only when editing Blade or Tailwind UI.
 
 Before code changes, use Laravel Boost `application-info` and `search-docs` for the relevant packages. Prefer Boost database and browser tools over ad hoc debugging.
@@ -20,7 +26,7 @@ Treat `packages/vendra-faq` as the source of faq domain behavior and Filament ad
 - Do not place faq domain code in the host app unless the host app is only integrating the module.
 - Keep API serialization and JSON:API route behavior out of this module; use `vendra-faq-api` for that.
 - Keep cross-module dependencies explicit in `composer.json`; do not introduce a dependency without approval.
-- Keep FAQ tags optional through Support's `HasOptionalTags` and `TagIntegration`. Use the reserved `faq` type, never import Vendra Tagger or Spatie Tags, and list Tagger only under Composer `suggest`.
+- Tag-consuming models must use `Misaf\VendraSupport\Traits\HasOptionalTags` as the single source of their `tags()` relationship and pivot metadata. Keep the package tag-agnostic: define a stable package-owned tag type, use `TagIntegration` for availability and UI integration, never import the concrete Vendra Tagger model/provider or define the relationship through Spatie `HasTags`, and list Tagger only under Composer `suggest`.
 
 ## Domain Model Standards
 
@@ -35,7 +41,7 @@ Follow the existing `Faq` and `FaqCategory` patterns for new faq entities.
 
 ## Filament Standards
 
-Keep Filament UI organized under `src/Filament/Clusters`.
+Keep every resource that declares a `$cluster`, including its complete supporting tree, under `src/Filament/Clusters/Resources/` with the matching `Misaf\VendraFaq\Filament\Clusters\Resources` namespace and plugin discovery path. Resources without a cluster belong under `src/Filament/Resources/`.
 
 - Register module UI through the module `Plugin` and `ServiceProvider`; do not manually wire resources in unrelated panel providers.
 - Keep resource classes thin. Delegate form schemas to `Schemas/*Form.php` and table configuration to `Tables/*Table.php`.
