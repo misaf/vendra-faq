@@ -13,6 +13,7 @@ use Filament\Actions\DeleteBulkAction;
 use Filament\Actions\EditAction;
 use Filament\Actions\ViewAction;
 use Filament\Support\Enums\Size;
+use Filament\Support\Icons\Heroicon;
 use Filament\Tables\Columns\Column;
 use Filament\Tables\Columns\ColumnGroup;
 use Filament\Tables\Columns\Layout\Component as LayoutComponent;
@@ -22,15 +23,18 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Enums\FiltersLayout;
 use Filament\Tables\Filters\QueryBuilder;
 use Filament\Tables\Filters\QueryBuilder\Constraints\BooleanConstraint;
+use Filament\Tables\Filters\QueryBuilder\Constraints\NumberConstraint;
 use Filament\Tables\Table;
 use Illuminate\Support\Number;
 use Livewire\Component as Livewire;
 use Misaf\VendraFaq\Models\FaqCategory;
 use Misaf\VendraSupport\Filament\Concerns\HasDefaultAvatarImageUrl;
+use Misaf\VendraSupport\Filament\Concerns\InteractsWithTranslatedTableRecords;
 
 final class FaqCategoryTable
 {
     use HasDefaultAvatarImageUrl;
+    use InteractsWithTranslatedTableRecords;
 
     public static function configure(Table $table): Table
     {
@@ -40,14 +44,14 @@ final class FaqCategoryTable
         $columns = [
             TextColumn::make('row')
                 ->label('#')
-                ->rowIndex(),
+                ->rowIndex()->sortable(),
 
             SpatieMediaLibraryImageColumn::make('image')
                 ->alignCenter()
-                ->collection('faqs/categories')
+                ->collection(FaqCategory::MEDIA_COLLECTION)
                 ->conversion('thumb-table')
                 ->defaultImageUrl(function (FaqCategory $record, Livewire $livewire): string {
-                    return static::defaultAvatarImageUrl($record->getTranslation('name', $livewire->activeLocale));
+                    return static::defaultAvatarImageUrl(static::translatedAttribute($record, 'name', $livewire));
                 })
                 ->extraImgAttributes(['class' => 'saturate-50', 'loading' => 'lazy'])
                 ->label(__('vendra-faq::attributes.image'))
@@ -56,9 +60,9 @@ final class FaqCategoryTable
             BadgeableColumn::make('name')
                 ->alignStart()
                 ->description(function (Livewire $livewire, FaqCategory $record): string {
-                    return $record->getTranslation('description', $livewire->activeLocale);
+                    return static::translatedAttribute($record, 'description', $livewire);
                 })
-                ->icon('heroicon-m-folder-plus')
+                ->icon(Heroicon::FolderPlus)
                 ->label(__('vendra-faq::attributes.name'))
                 ->suffixBadges([
                     Badge::make('count')
@@ -73,7 +77,7 @@ final class FaqCategoryTable
 
             ToggleColumn::make('status')
                 ->label(__('vendra-faq::attributes.status'))
-                ->onIcon('heroicon-m-bolt'),
+                ->onIcon(Heroicon::Bolt),
 
             TextColumn::make('created_at')
                 ->alignCenter()
@@ -82,7 +86,7 @@ final class FaqCategoryTable
                 ->label(__('vendra-faq::attributes.created_at'))
                 ->sinceTooltip()
                 ->toggleable(isToggledHiddenByDefault: true)
-                ->unless(
+                ->when(
                     app()->isLocale('fa'),
                     fn(TextColumn $column) => $column->jalaliDateTime('Y-m-d H:i', latinNumbers: true),
                     fn(TextColumn $column) => $column->dateTime('Y-m-d H:i')
@@ -95,7 +99,7 @@ final class FaqCategoryTable
                 ->label(__('vendra-faq::attributes.updated_at'))
                 ->sinceTooltip()
                 ->toggleable(isToggledHiddenByDefault: true)
-                ->unless(
+                ->when(
                     app()->isLocale('fa'),
                     fn(TextColumn $column) => $column->jalaliDateTime('Y-m-d H:i', latinNumbers: true),
                     fn(TextColumn $column) => $column->dateTime('Y-m-d H:i')
@@ -110,6 +114,8 @@ final class FaqCategoryTable
                         ->constraints([
                             BooleanConstraint::make('status')
                                 ->label(__('vendra-faq::attributes.status')),
+
+                            NumberConstraint::make('position'),
                         ]),
                 ],
                 layout: FiltersLayout::AboveContentCollapsible,
@@ -128,7 +134,7 @@ final class FaqCategoryTable
                     DeleteBulkAction::make(),
                 ]),
             ])
-            ->defaultSort(column: 'position', direction: 'desc')
+            ->defaultSort(column: 'id', direction: 'desc')
             ->reorderable(column: 'position', direction: 'desc');
     }
 }
