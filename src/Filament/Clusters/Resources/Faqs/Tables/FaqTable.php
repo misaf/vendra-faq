@@ -76,13 +76,11 @@ final class FaqTable
                 ->icon(Heroicon::Link)
                 ->toggleable(isToggledHiddenByDefault: true),
 
-            ToggleColumn::make('status')
-                ->label(__('vendra-faq::attributes.status'))
+            ToggleColumn::make('active')
+                ->label(__('vendra-faq::attributes.active'))
                 ->onIcon(Heroicon::Bolt),
 
             TextColumn::make('created_at')
-                ->alignCenter()
-                ->badge()
                 ->extraCellAttributes(['dir' => 'ltr'])
                 ->label(__('vendra-faq::attributes.created_at'))
                 ->sinceTooltip()
@@ -93,8 +91,6 @@ final class FaqTable
                 ),
 
             TextColumn::make('updated_at')
-                ->alignCenter()
-                ->badge()
                 ->extraCellAttributes(['dir' => 'ltr'])
                 ->label(__('vendra-faq::attributes.updated_at'))
                 ->sinceTooltip()
@@ -134,8 +130,8 @@ final class FaqTable
                                         ->titleAttribute('name'),
                                 ),
 
-                            BooleanConstraint::make('status')
-                                ->label(__('vendra-faq::attributes.status')),
+                            BooleanConstraint::make('active')
+                                ->label(__('vendra-faq::attributes.active')),
 
                             NumberConstraint::make('position'),
                         ]),
