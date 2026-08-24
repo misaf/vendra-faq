@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Misaf\VendraFaq\Tests\Unit;
+namespace Misaf\VendraFaq\Tests\Feature;
 
 use Misaf\VendraFaq\Models\Faq;
 use Misaf\VendraSupport\Capabilities\EloquentTagResolver;

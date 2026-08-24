@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Misaf\VendraFaq\Tests\Unit;
+namespace Misaf\VendraFaq\Tests\Feature;
 
 use Illuminate\Database\Eloquent\Model;
 
